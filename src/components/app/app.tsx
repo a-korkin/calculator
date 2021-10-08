@@ -1,30 +1,36 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
+import Button from "../button";
 import "./styles.scss";
 
 const App: FC = () => {
+
+    const [value, setValue] = useState<string>("0");
+
+    const buttons = [
+        "CE", "←", "/", 
+        "7", "8", "9", "x",
+        "4", "5", "6", "-",
+        "1", "2", "3", "+",
+        "0", ".", "="
+    ];
+
+
+    const onClickHandler = () => {
+        console.log("clicked");
+    }
+
     return (
         <div className="main">
-            <button className="btn">CE</button>
-            <button className="btn">&larr;</button>
-
-            <button className="btn">7</button>
-            <button className="btn">8</button>
-            <button className="btn">9</button>
-            <button className="btn">&times;</button>
-
-            <button className="btn">4</button>
-            <button className="btn">5</button>
-            <button className="btn">6</button>
-            <button className="btn">-</button>
-
-            <button className="btn">1</button>
-            <button className="btn">2</button>
-            <button className="btn">3</button>
-            <button className="btn">+</button>
-
-            <button className="btn">0</button>
-            <button className="btn">.</button>
-            <button className="btn">=</button>
+            <div className="calc">
+                <input type="text" id="result" className="input-result" placeholder="0" disabled />
+                <div className="buttons">
+                    {
+                        buttons.map((i) => 
+                            <Button key={i} id={i} />
+                        )
+                    }
+                </div>
+            </div>
         </div>
     )
 }
