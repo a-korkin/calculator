@@ -2,12 +2,14 @@ import React, { FC } from "react";
 
 interface IButtonProps {
     id: string;
+    onClick: (v: string) => void;
 }
 
-const Button: FC<IButtonProps> = ({id}) => {
+const Button: FC<IButtonProps> = ({ id, onClick }) => {
 
     const clickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-        console.log(event.currentTarget.getAttribute("id"));
+        let value = event.currentTarget.getAttribute("id") ?? "";
+        onClick(value);
     }
 
     return (

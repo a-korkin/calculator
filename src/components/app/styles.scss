@@ -1,16 +1,16 @@
 @font-face {
-    font-family: "Monoton-Regular";
-    src: url("./fonts/Monoton-Regular.ttf");
+    font-family: "Montserrat-Bold";
+    src: url("./fonts/Montserrat-Bold.ttf");
 }
 
 @font-face {
-    font-family: "NunitoSans-Bold";
-    src: url("./fonts/NunitoSans-Bold.ttf");
+    font-family: "Montserrat-Light";
+    src: url("./fonts/Montserrat-Light.ttf");
 }
 
 @font-face {
-    font-family: "NunitoSans-Light";
-    src: url("./fonts/NunitoSans-Light.ttf");
+    font-family: "Montserrat-Regular";
+    src: url("./fonts/Montserrat-Regular.ttf");
 }
 
 html {
@@ -18,7 +18,7 @@ html {
 }
 
 body {
-    font-family: "NunitoSans-Bold";
+    font-family: "Montserrat-Regular";
     background-color: #1D293A;
     color: #fff;
 }
@@ -27,7 +27,7 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -30%);
+    transform: translate(-50%, -50%);
 }
 
 .calc {
@@ -36,11 +36,11 @@ body {
 
 .input-result {
     border: none;
-    padding: 3rem 3rem;
+    padding: .5rem;
     background-color: transparent;
     color: #fff;
-    font-size: 5rem;
-    font-family: "NunitoSans-Light";
+    font-size: 2rem;
+    font-family: inherit;
     text-align: right;
 
     &:focus {
@@ -59,9 +59,9 @@ body {
 }
 
 .btn {
-    padding: 1rem 3rem;
-    font-family: "Monoton-Regular";
-    font-size: 5rem;
+    padding: 1rem;
+    font-size: 4rem;
+    font-family: "Montserrat-Regular";
     color: #fff;
     background-color: #354357;
     cursor: pointer;
