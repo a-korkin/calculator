@@ -13,18 +13,37 @@ const App: FC = () => {
         "0", ".", "="
     ];
 
-    const { setDisplay, inc } = useActions();
+    const { setDisplay, inc, dec } = useActions();
     const { reducer } = useTypedSelector(state => state);
 
     const onClickHandler = (value: string = "") => {
         let res = 0;
         
-        if (value) {
+        if (value && value !== "+") {
             res = parseInt(value);
+            console.log(res);
         } 
+
+        switch (value) {
+            case "+":
+                inc(res);
+                // console.log(res);
+                // console.log(reducer.value);
+                break;
+            case "-":
+                dec(reducer.value - res);
+                break;
+            case "=":
+                setDisplay(reducer.value.toString());
+                break;
+            default:
+                // console.log(reducer.display);
+                break;
+        }
 
         // inc(res);
         setDisplay(reducer.display + value);
+        // console.log("value: " + reducer.value);
         
         // console.log(reducer.value);
         // console.log(reducer.display);

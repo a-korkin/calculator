@@ -48,6 +48,7 @@ export const reducer = (state: IAppState = initialState, action: AppAction): IAp
         case AppActionEnum.SET_DISPLAY:
             return { ...state, display: action.payload };
         case AppActionEnum.INC:
+            // console.log(action.payload);
             return { ...state, value: state.value + action.payload };
         case AppActionEnum.DEC:
             return { ...state, value: state.value - action.payload };
