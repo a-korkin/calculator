@@ -1,11 +1,13 @@
 interface IAppState {
     display: string;
-    value: number;
+    boofer: string;
+    total: number;
 }
 
 const initialState: IAppState = {
     display: "0",
-    value: 0
+    boofer: "0",
+    total: 0
 }
 
 export enum AppActionEnum {
@@ -13,12 +15,23 @@ export enum AppActionEnum {
     DEC = "DEC",
     MUL = "MUL",
     DIV = "DIV",
-    SET_DISPLAY = "SET_DISPLAY"
+    SET_DISPLAY = "SET_DISPLAY",
+    SET_BOOFER = "SET_BOOFER",
+    RESET = "RESET"
 }
 
 export interface SetDisplayAction {
-    type: AppActionEnum.SET_DISPLAY,
+    type: AppActionEnum.SET_DISPLAY;
     payload: string;
+}
+
+export interface SetBooferAction {
+    type: AppActionEnum.SET_BOOFER;
+    payload: string;
+}
+
+export interface ResetBooferAction {
+    type: AppActionEnum.RESET;
 }
 
 export interface IncAction {
@@ -41,21 +54,24 @@ export interface DivAction {
     payload: number;
 }
 
-export type AppAction = IncAction | DecAction | MulAction | DivAction | SetDisplayAction;
+export type AppAction = IncAction | DecAction | MulAction | DivAction | SetDisplayAction | SetBooferAction | ResetBooferAction;
 
 export const reducer = (state: IAppState = initialState, action: AppAction): IAppState => {
     switch (action.type) {
+        case AppActionEnum.RESET:
+            return { ...state, boofer: "0" };
+        case AppActionEnum.SET_BOOFER:
+            return { ...state, boofer: state.boofer + action.payload };
         case AppActionEnum.SET_DISPLAY:
             return { ...state, display: action.payload };
         case AppActionEnum.INC:
-            // console.log(action.payload);
-            return { ...state, value: state.value + action.payload };
+            return { ...state, total: state.total + action.payload };
         case AppActionEnum.DEC:
-            return { ...state, value: state.value - action.payload };
+            return { ...state, total: state.total - action.payload };
         case AppActionEnum.MUL:
-            return { ...state, value: state.value * action.payload };
+            return { ...state, total: state.total * action.payload };
         case AppActionEnum.DIV:
-                return { ...state, value: state.value / action.payload };            
+                return { ...state, total: state.total / action.payload };            
         default: 
             return state;
     }

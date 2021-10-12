@@ -13,40 +13,47 @@ const App: FC = () => {
         "0", ".", "="
     ];
 
-    const { setDisplay, inc, dec } = useActions();
+    const { resetBoofer, setBoofer, setDisplay, inc, dec } = useActions();
     const { reducer } = useTypedSelector(state => state);
 
     const onClickHandler = (value: string = "") => {
-        let res = 0;
+        // let res = 0;
         
-        if (value && value !== "+") {
-            res = parseInt(value);
-            console.log(res);
-        } 
+        // if (value && value !== "+" && value !== "=") {
+        //     res = parseInt(value);
+        // } 
+        
+        if (reducer.display === "0")
+            setDisplay(value);
+        else 
+            setDisplay(reducer.display + value);
 
-        switch (value) {
-            case "+":
-                inc(res);
-                // console.log(res);
-                // console.log(reducer.value);
-                break;
-            case "-":
-                dec(reducer.value - res);
-                break;
-            case "=":
-                setDisplay(reducer.value.toString());
-                break;
-            default:
-                // console.log(reducer.display);
-                break;
+        // switch (value) {
+        //     case "+":
+        //         console.log(`before: ${reducer.total}`);
+        //         console.log(`new: ${reducer.boofer}`);
+        //         inc(parseInt(reducer.boofer));
+        //         resetBoofer();
+        //         console.log(`after: ${reducer.total}`);
+        //         break;
+        //     case "=":
+        //         setDisplay(reducer.total.toString());
+        //         break;
+        //     default:
+        //         setBoofer(value);
+        //         break;
+        // }
+        
+        setBoofer(value);
+
+        if (value === "=") {
+            let arr = reducer.display.replace("=", "").split("+");
+            for (let i = 0; i < arr.length; i++) {
+                console.log(arr[i]);
+                inc(parseInt(arr[i]));
+            }
+            setDisplay(reducer.total.toString());
         }
-
-        // inc(res);
-        setDisplay(reducer.display + value);
-        // console.log("value: " + reducer.value);
-        
-        // console.log(reducer.value);
-        // console.log(reducer.display);
     }
 
     return (
