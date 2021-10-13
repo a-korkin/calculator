@@ -13,46 +13,70 @@ const App: FC = () => {
         "0", ".", "="
     ];
 
-    const { resetBoofer, setBoofer, setDisplay, inc, dec } = useActions();
+    const { reset, resetBoofer, setOperation, setBoofer, setDisplay, inc, dec, mul, div } = useActions();
     const { reducer } = useTypedSelector(state => state);
 
     const onClickHandler = (value: string = "") => {
-        // let res = 0;
-        
-        // if (value && value !== "+" && value !== "=") {
-        //     res = parseInt(value);
-        // } 
-        
         if (reducer.display === "0")
             setDisplay(value);
         else 
             setDisplay(reducer.display + value);
 
-        // switch (value) {
-        //     case "+":
-        //         console.log(`before: ${reducer.total}`);
-        //         console.log(`new: ${reducer.boofer}`);
-        //         inc(parseInt(reducer.boofer));
-        //         resetBoofer();
-        //         console.log(`after: ${reducer.total}`);
-        //         break;
-        //     case "=":
-        //         setDisplay(reducer.total.toString());
-        //         break;
-        //     default:
-        //         setBoofer(value);
-        //         break;
-        // }
-        
-        setBoofer(value);
+        switch (value) {
+            case "+":
+                setOperation(value);
+                inc(parseFloat(reducer.boofer));
+                resetBoofer();
+                break;
+            case "-":
+                setOperation(value);
+                dec(parseFloat(reducer.boofer));
+                resetBoofer();
+                break;
+            case "x":
+                console.log(reducer.total);
+                setOperation(value);
+                mul(parseFloat(reducer.boofer));
+                resetBoofer();
+                break;
+            case "/":
+                setOperation(value);
+                div(parseFloat(reducer.boofer));
+                resetBoofer();
+                break;                
+            case "=":
+                calculate(reducer.total, parseFloat(reducer.boofer), reducer.operation);
+                resetBoofer();
+                break;
+            case "CE":
+                reset();
+                break;
+            default:
+                setBoofer(value);
+                break;
+        }
+    }
 
-        if (value === "=") {
-            let arr = reducer.display.replace("=", "").split("+");
-            for (let i = 0; i < arr.length; i++) {
-                console.log(arr[i]);
-                inc(parseInt(arr[i]));
-            }
-            setDisplay(reducer.total.toString());
+    const calculate = (a: number, b: number, operation: string): number => {
+        switch (operation) {
+            case "+":
+                inc(parseFloat(reducer.boofer));
+                setDisplay((reducer.total + parseFloat(reducer.boofer)).toString());
+                return a + b;
+            case "-":
+                dec(parseFloat(reducer.boofer));
+                setDisplay((reducer.total - parseFloat(reducer.boofer)).toString());
+                return a - b;
+            case "x": 
+                mul(parseFloat(reducer.boofer));
+                setDisplay((reducer.total * parseFloat(reducer.boofer)).toString());
+                return a * b;
+            case "/":
+                div(parseFloat(reducer.boofer));
+                setDisplay((reducer.total / parseFloat(reducer.boofer)).toString())
+                return a / b;
+            default:
+                return 0;
         }
     }
 

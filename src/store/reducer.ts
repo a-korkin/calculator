@@ -2,12 +2,14 @@ interface IAppState {
     display: string;
     boofer: string;
     total: number;
+    operation: string;
 }
 
 const initialState: IAppState = {
     display: "0",
     boofer: "0",
-    total: 0
+    total: 0,
+    operation: ""
 }
 
 export enum AppActionEnum {
@@ -17,6 +19,8 @@ export enum AppActionEnum {
     DIV = "DIV",
     SET_DISPLAY = "SET_DISPLAY",
     SET_BOOFER = "SET_BOOFER",
+    RESET_BOOFER = "RESET_BOOFER",
+    SET_OPERATION = "SET_OPERATION",
     RESET = "RESET"
 }
 
@@ -31,7 +35,7 @@ export interface SetBooferAction {
 }
 
 export interface ResetBooferAction {
-    type: AppActionEnum.RESET;
+    type: AppActionEnum.RESET_BOOFER;
 }
 
 export interface IncAction {
@@ -54,12 +58,31 @@ export interface DivAction {
     payload: number;
 }
 
-export type AppAction = IncAction | DecAction | MulAction | DivAction | SetDisplayAction | SetBooferAction | ResetBooferAction;
+export interface SetOperationAction {
+    type: AppActionEnum.SET_OPERATION;
+    payload: string;
+}
+
+export interface ResetAction {
+    type: AppActionEnum.RESET;
+}
+
+export type AppAction = IncAction | DecAction | MulAction | DivAction | SetDisplayAction | SetBooferAction | ResetAction | ResetBooferAction | SetOperationAction;
 
 export const reducer = (state: IAppState = initialState, action: AppAction): IAppState => {
     switch (action.type) {
         case AppActionEnum.RESET:
+            return { 
+                ...state, 
+                display: "0",
+                boofer: "0",
+                total: 0,
+                operation: "" 
+            };
+        case AppActionEnum.RESET_BOOFER:
             return { ...state, boofer: "0" };
+        case AppActionEnum.SET_OPERATION:
+            return { ...state, operation: action.payload };            
         case AppActionEnum.SET_BOOFER:
             return { ...state, boofer: state.boofer + action.payload };
         case AppActionEnum.SET_DISPLAY:
